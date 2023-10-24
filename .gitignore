@@ -23,6 +23,8 @@ Saved/*
 
 # External Assets
 Content/ExternalContent/*
+Content/StarterContent/*
+Content/*External*/*
 
 # Content Built data for maps
 *_BuiltData.uasset

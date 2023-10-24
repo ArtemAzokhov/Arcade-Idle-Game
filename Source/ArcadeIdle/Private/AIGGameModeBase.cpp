@@ -2,4 +2,9 @@
 
 
 #include "AIGGameModeBase.h"
+#include "UI/AIGHUD.h"
 
+AAIGGameModeBase::AAIGGameModeBase()
+{
+    HUDClass = AAIGHUD::StaticClass();
+}

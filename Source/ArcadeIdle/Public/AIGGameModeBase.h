@@ -7,11 +7,14 @@
 #include "AIGGameModeBase.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class ARCADEIDLE_API AAIGGameModeBase : public AGameModeBase
 {
-	GENERATED_BODY()
-	
+    GENERATED_BODY()
+
+public:
+    AAIGGameModeBase();
 };
+
