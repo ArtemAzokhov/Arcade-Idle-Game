@@ -6,9 +6,6 @@
 #include "GameFramework/GameModeBase.h"
 #include "AIGGameModeBase.generated.h"
 
-/**
- *
- */
 UCLASS()
 class ARCADEIDLE_API AAIGGameModeBase : public AGameModeBase
 {
@@ -17,4 +14,3 @@ class ARCADEIDLE_API AAIGGameModeBase : public AGameModeBase
 public:
     AAIGGameModeBase();
 };
-
