@@ -9,6 +9,8 @@
 #include "NiagaraSystem.h"
 #include "NiagaraFunctionLibrary.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "Components/CapsuleComponent.h"
+#include "Interactable.h"
 
 AAIGBaseCharacter::AAIGBaseCharacter()
 {
@@ -31,6 +33,9 @@ AAIGBaseCharacter::AAIGBaseCharacter()
 void AAIGBaseCharacter::BeginPlay()
 {
     Super::BeginPlay();
+
+    GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AAIGBaseCharacter::HandleBeginOverlap);
+    GetCapsuleComponent()->OnComponentEndOverlap.AddDynamic(this, &AAIGBaseCharacter::HandleEndOverlap);
 }
 
 void AAIGBaseCharacter::Tick(float DeltaTime)
@@ -60,6 +65,34 @@ void AAIGBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
     Input->BindAction(SetDestinationClickAction, ETriggerEvent::Triggered, this, &AAIGBaseCharacter::OnSetDestinationTriggered);
     Input->BindAction(SetDestinationClickAction, ETriggerEvent::Completed, this, &AAIGBaseCharacter::OnSetDestinationReleased);
     Input->BindAction(SetDestinationClickAction, ETriggerEvent::Canceled, this, &AAIGBaseCharacter::OnSetDestinationReleased);
+}
+
+void AAIGBaseCharacter::HandleBeginOverlap(  //
+    UPrimitiveComponent* OverlapedComponent, //
+    AActor* OtherActor,                      //
+    UPrimitiveComponent* OtherComp,          //
+    int32 OtherBodyIndex,                    //
+    bool bFromSweep,                         //
+    const FHitResult& SweepResult)
+{
+    IInteractable* InteractActor = Cast<IInteractable>(OtherActor);
+    if (InteractActor)
+    {
+        InteractActor->Interact(true); // IsInteract = true;
+    }
+}
+
+void AAIGBaseCharacter::HandleEndOverlap(     //
+    UPrimitiveComponent* OverlappedComponent, //
+    AActor* OtherActor,                       //
+    UPrimitiveComponent* OtherComp,           //
+    int32 OtherBodyIndex)
+{
+    IInteractable* InteractActor = Cast<IInteractable>(OtherActor);
+    if (InteractActor)
+    {
+        InteractActor->Interact(false); // IsInteract = false;
+    }
 }
 
 void AAIGBaseCharacter::OnInputStarted()
