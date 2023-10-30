@@ -19,17 +19,12 @@ void AInteractActorBase::BeginPlay()
     Super::BeginPlay();
 }
 
-void AInteractActorBase::Tick(float DeltaTime)
-{
-    Super::Tick(DeltaTime);
-}
-
-void AInteractActorBase::Interact(bool IsIteract)
+void AInteractActorBase::Interact(bool IsInteract, AActor* OtherActor)
 {
     auto HUD = Cast<AAIGHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
     if (!HUD) return;
 
-    if (IsIteract)
+    if (IsInteract)
     {
         HUD->ShowPopUpMenu();
         UE_LOG(LogTemp, Warning, TEXT("HandleBeginOverlap"));

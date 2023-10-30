@@ -11,6 +11,7 @@
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Components/CapsuleComponent.h"
 #include "Interactable.h"
+#include "Dev/PickUpBase.h"
 
 AAIGBaseCharacter::AAIGBaseCharacter()
 {
@@ -78,7 +79,7 @@ void AAIGBaseCharacter::HandleBeginOverlap(  //
     IInteractable* InteractActor = Cast<IInteractable>(OtherActor);
     if (InteractActor)
     {
-        InteractActor->Interact(true); // IsInteract = true;
+        InteractActor->Interact(true, this); // IsInteract = true;
     }
 }
 
@@ -91,8 +92,54 @@ void AAIGBaseCharacter::HandleEndOverlap(     //
     IInteractable* InteractActor = Cast<IInteractable>(OtherActor);
     if (InteractActor)
     {
-        InteractActor->Interact(false); // IsInteract = false;
+        InteractActor->Interact(false, this); // IsInteract = false;
     }
+}
+
+void AAIGBaseCharacter::OnGetPicUp(AActor* PicUpActor)
+{
+    UE_LOG(LogTemp, Warning, TEXT("Pic up is successful"));
+    auto PicUp = Cast<APickUpBase>(PicUpActor);
+    if (PicUp)
+    {
+
+        auto NameLog = PicUp->GetPickUpName();
+        UE_LOG(LogTemp, Warning, TEXT("Name: %s"), *NameLog.ToString());
+
+        auto ValueLog = PicUp->GetPickUpValue();
+        UE_LOG(LogTemp, Warning, TEXT("Value: %0.f"), ValueLog);
+
+        UE_LOG(LogTemp, Warning, TEXT("Inventory: %i"), InventoryAmount);
+        AddInventory();
+        UE_LOG(LogTemp, Warning, TEXT("Inventory: %i"), InventoryAmount);
+    }
+}
+
+void AAIGBaseCharacter::OnSellPicUp(AActor* BuyActor) //// for different buyers
+{
+    AddResource();
+    DecreaseInventory();
+}
+
+void AAIGBaseCharacter::AddInventory()
+{
+    InventoryAmount = ++InventoryAmount;
+}
+
+void AAIGBaseCharacter::DecreaseInventory()
+{
+    if (InventoryAmount == 0) return;
+    InventoryAmount = InventoryAmount - InventoryAmount; // - InventoryAmountForSale
+}
+
+void AAIGBaseCharacter::AddResource()
+{
+    ResourceAmount += InventoryAmount; // InventoryAmountForSale * Value;
+}
+
+void AAIGBaseCharacter::DecreaseResource()
+{
+    // ResourceAmount = ResourceAmount - Price;
 }
 
 void AAIGBaseCharacter::OnInputStarted()

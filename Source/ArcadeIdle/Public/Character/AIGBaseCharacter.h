@@ -52,6 +52,12 @@ private:
     bool IsMovingForward = false;
 
 public:
+    UPROPERTY(EditDefaultsOnly, Category = "Inventory")
+    int32 InventoryAmount = 0;
+
+    UPROPERTY(EditDefaultsOnly, Category = "Inventory")
+    int32 ResourceAmount = 0;
+
     virtual void Tick(float DeltaTime) override;
 
     virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -71,4 +77,16 @@ public:
         AActor* OtherActor,                       //
         UPrimitiveComponent* OtherComp,           //
         int32 OtherBodyIndex);
+
+    UFUNCTION()
+    void OnGetPicUp(AActor* PicUpActor);
+
+    UFUNCTION()
+    void OnSellPicUp(AActor* BuyActor); // for different buyers
+
+    void AddInventory();
+    void DecreaseInventory();
+
+    void AddResource();
+    void DecreaseResource();
 };

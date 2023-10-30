@@ -29,6 +29,6 @@ protected:
 
     virtual void BeginPlay() override;
 
-    private:
+private:
     UUserWidget* PopUpWidget;
 };

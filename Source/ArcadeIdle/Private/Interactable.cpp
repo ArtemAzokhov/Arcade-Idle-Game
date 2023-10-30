@@ -2,4 +2,4 @@
 
 #include "Interactable.h"
 
-void IInteractable::Interact(bool IsIteract) {}
+void IInteractable::Interact(bool IsInteract, AActor* OtherActor) {}

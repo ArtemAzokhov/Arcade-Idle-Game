@@ -34,6 +34,6 @@ void AAIGHUD::ShowPopUpMenu()
 void AAIGHUD::HidePopUpMenu()
 {
     UWidgetBlueprintLibrary::SetInputMode_GameOnly(GetOwningPawn()->GetLocalViewingPlayerController());
-    UGameplayStatics::SetViewportMouseCaptureMode(GetWorld(), EMouseCaptureMode::CapturePermanently_IncludingInitialMouseDown);
+    UGameplayStatics::SetViewportMouseCaptureMode(GetWorld(), EMouseCaptureMode::CaptureDuringMouseDown);
     PopUpWidget->RemoveFromParent();
 }

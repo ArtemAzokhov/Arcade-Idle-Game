@@ -5,23 +5,25 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Interactable.h"
-#include "InteractActorBase.generated.h"
+#include "DealerBase.generated.h"
 
 class UBoxComponent;
 
 UCLASS()
-class ARCADEIDLE_API AInteractActorBase : public AActor, public IInteractable
+class ARCADEIDLE_API ADealerBase : public AActor, public IInteractable
 {
     GENERATED_BODY()
 
 public:
-    AInteractActorBase();
+    ADealerBase();
 
 protected:
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Collision")
-    UBoxComponent* BoxCollision;
-
     virtual void BeginPlay() override;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Dealer")
+    UStaticMeshComponent* StaticMesh;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Dealer")
+    UBoxComponent* ColissionComponent;
 
 public:
     UFUNCTION()

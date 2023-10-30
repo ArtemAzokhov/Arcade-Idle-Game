@@ -18,5 +18,5 @@ class ARCADEIDLE_API IInteractable
 
 public:
     UFUNCTION()
-    virtual void Interact(bool IsIteract);
+    virtual void Interact(bool IsInteract, AActor* OtherActor);
 };
